@@ -1,0 +1,749 @@
+#VRML V2.0 utf8
+
+PROTO Joint [
+  exposedField     SFVec3f      center              0 0 0
+  exposedField     MFNode       children            []
+  exposedField     MFFloat      llimit              []
+  exposedField     MFFloat      lvlimit             []
+  exposedField     SFRotation   limitOrientation    0 0 1 0
+  exposedField     SFString     name                ""
+  exposedField     SFRotation   rotation            0 0 1 0
+  exposedField     SFVec3f      scale               1 1 1
+  exposedField     SFRotation   scaleOrientation    0 0 1 0
+  exposedField     MFFloat      stiffness           [ 0 0 0 ]
+  exposedField     SFVec3f      translation         0 0 0
+  exposedField     MFFloat      ulimit              []
+  exposedField     MFFloat      uvlimit             []
+  exposedField     SFString     jointType           ""
+  exposedField     SFInt32      jointId             -1
+  exposedField     SFVec3f      jointAxis           0 0 1
+
+  exposedField     SFFloat      gearRatio           1
+  exposedField     SFFloat      rotorInertia        0
+  exposedField     SFFloat      rotorResistor       0
+  exposedField     SFFloat      torqueConst         1
+  exposedField     SFFloat      encoderPulse        1
+]
+{
+  Transform {
+    center           IS center
+    children         IS children
+    rotation         IS rotation
+    scale            IS scale
+    scaleOrientation IS scaleOrientation
+    translation      IS translation
+  }
+}
+
+PROTO Segment [
+  field           SFVec3f     bboxCenter        0 0 0
+  field           SFVec3f     bboxSize          -1 -1 -1
+  exposedField    SFVec3f     centerOfMass      0 0 0
+  exposedField    MFNode      children          [ ]
+  exposedField    SFNode      coord             NULL
+  exposedField    MFNode      displacers        [ ]
+  exposedField    SFFloat     mass              0 
+  exposedField    MFFloat     momentsOfInertia  [ 0 0 0 0 0 0 0 0 0 ]
+  exposedField    SFString    name              ""
+  eventIn         MFNode      addChildren
+  eventIn         MFNode      removeChildren
+]
+{
+  Group {
+    addChildren    IS addChildren
+    bboxCenter     IS bboxCenter
+    bboxSize       IS bboxSize
+    children       IS children
+    removeChildren IS removeChildren
+  }
+}
+
+PROTO Humanoid [
+  field           SFVec3f    bboxCenter            0 0 0
+  field           SFVec3f    bboxSize              -1 -1 -1
+  exposedField    SFVec3f    center                0 0 0
+  exposedField    MFNode     humanoidBody          [ ]
+  exposedField    MFString   info                  [ ]
+  exposedField    MFNode     joints                [ ]
+  exposedField    SFString   name                  ""
+  exposedField    SFRotation rotation              0 0 1 0
+  exposedField    SFVec3f    scale                 1 1 1
+  exposedField    SFRotation scaleOrientation      0 0 1 0
+  exposedField    MFNode     segments              [ ]
+  exposedField    MFNode     sites                 [ ]
+  exposedField    SFVec3f    translation           0 0 0
+  exposedField    SFString   version               "1.1"
+  exposedField    MFNode     viewpoints            [ ]
+]
+{
+  Transform {
+    bboxCenter       IS bboxCenter
+    bboxSize         IS bboxSize
+    center           IS center
+    rotation         IS rotation
+    scale            IS scale
+    scaleOrientation IS scaleOrientation
+    translation      IS translation
+    children [
+      Group {
+        children IS viewpoints
+      }
+      Group {
+        children IS humanoidBody 
+      }
+    ]
+  }
+}
+
+PROTO VisionSensor [
+  exposedField SFVec3f    translation       0 0 0
+  exposedField SFRotation rotation          0 0 1 0
+  exposedField MFNode     children          [ ]
+  exposedField SFFloat    fieldOfView       0.785398
+  exposedField SFString   name              ""
+  exposedField SFFloat    frontClipDistance 0.01
+  exposedField SFFloat    backClipDistance  10.0
+  exposedField SFString   type              "NONE"
+  exposedField SFInt32    sensorId          -1
+  exposedField SFInt32    width             320
+  exposedField SFInt32    height            240
+  exposedField SFFloat    frameRate         30
+]
+{
+  Transform {
+    rotation         IS rotation
+    translation      IS translation
+    children         IS children
+  }
+}
+
+
+PROTO ForceSensor [  
+  exposedField SFVec3f    maxForce    -1 -1 -1
+  exposedField SFVec3f    maxTorque   -1 -1 -1
+  exposedField SFVec3f    translation 0 0 0
+  exposedField SFRotation rotation    0 0 1 0
+  exposedField MFNode     children          [ ]
+  exposedField SFInt32    sensorId    -1
+]
+{
+  Transform {
+    translation IS translation
+    rotation    IS rotation
+    children    IS children
+  }
+}
+
+PROTO Gyro [
+  exposedField SFVec3f    maxAngularVelocity -1 -1 -1
+  exposedField SFVec3f    translation        0 0 0
+  exposedField SFRotation rotation           0 0 1 0
+  exposedField MFNode     children          [ ]
+  exposedField SFInt32    sensorId           -1
+]
+{
+  Transform {
+    translation IS translation
+    rotation    IS rotation
+    children    IS children
+  }
+}
+
+PROTO AccelerationSensor [
+  exposedField SFVec3f    maxAcceleration -1 -1 -1
+  exposedField SFVec3f    translation     0 0 0
+  exposedField SFRotation rotation        0 0 1 0
+  exposedField MFNode     children          [ ]
+  exposedField SFInt32    sensorId        -1
+]
+{
+  Transform {
+    translation IS translation
+    rotation    IS rotation
+    children    IS children
+  }
+}
+
+PROTO RangeSensor [
+  exposedField SFVec3f    translation     0 0 0
+  exposedField SFRotation rotation        0 0 1 0
+  exposedField MFNode     children        [ ]
+  exposedField SFInt32    sensorId        -1
+  exposedField SFFloat    scanAngle       3.14159 #[rad]
+  exposedField SFFloat    scanStep        0.1     #[rad]
+  exposedField SFFloat    scanRate        10      #[Hz]
+  exposedField SFFloat    maxDistance	    10
+]
+{
+  Transform {
+    translation IS translation
+    rotation    IS rotation
+    children    IS children
+  }
+}
+
+PROTO Plane [
+  exposedField SFVec3f size 10 10 0
+]
+{
+  Box {
+    size IS size
+  }
+}
+
+PROTO ExtraJoint [
+  exposedField SFString 	link1Name 		""
+  exposedField SFString 	link2Name 		""
+  exposedField SFVec3f  	link1LocalPos	0 0 0
+  exposedField SFVec3f  	link2LocalPos	0 0 0
+  exposedField SFString 	jointType 		"xyz"
+  exposedField SFVec3f	jointAxis 		1 0 0
+]
+{
+}
+
+NavigationInfo {
+  avatarSize    0.5
+  headlight     TRUE
+  type  ["EXAMINE", "ANY"]
+}
+
+Background {
+  skyColor 0.4 0.6 0.4
+}
+
+Viewpoint {
+  position    3 0 0.835
+  orientation 0.5770 0.5775 0.5775 2.0935
+}
+
+DEF My_Robot_Model Humanoid{
+  humanoidBody [
+    DEF Body Joint {
+      jointType "free"
+      children[
+        DEF Body_LINK Segment{
+          centerOfMass -0.000191 -0.018409 -0.025500
+          mass 1.011160 
+          momentsOfInertia [
+	  1.0339434762E-2 1.1316192E-5 -2.4963223E-5
+	  1.1316192E-5 1.3752136973E-2 6.65968495E-5
+	  -2.4963223E-5 6.65968495E-5 4.760224532E-6
+	  ]
+          children[
+            Transform {
+              rotation 1 0 0 1.57 
+              children[
+            Inline { url "Body.wrl" }
+              ]
+            }
+          ]
+        }
+        DEF Left_Shoulder_Front Joint {
+          jointType "rotate"
+          jointId 0
+          jointAxis 0.0 0.0 1.0 
+          translation -0.108 0.0367 -0.055 
+          rotation 0 0 1 -1.57 
+	  ulimit [1.57 ]
+          llimit [-1.57 ]
+          rotorInertia 1.0
+          rotorResistor 1.0
+          children[
+            DEF Left_Shoulder_Front_LINK Segment{
+              centerOfMass -0.002157 -0.054014 0.029939
+              mass 0.089684
+              momentsOfInertia [
+	      4.9662489E-5 -1.835120E-6 -1.53222E-7
+	      -1.835120E-6 4.1092152E-5 -4.4124E-8
+              -1.53222E-7 -4.4124E-8 5.4243877E-5
+	      ]
+              children[
+                Transform {
+                  children[
+                Inline { url "Left_Shoulder.wrl" }
+                  ]
+                }
+              ]
+            }
+	     DEF Left_ParallelFrameBottom_Front Joint {
+              jointType "rotate"
+              jointId 1
+              jointAxis 1.0 0.0 0.0 
+              translation 0.027 -0.04 0.0325
+	      ulimit [1.57]
+              llimit [0 ]
+              rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                Transform {
+                  translation 0 0 0 
+                  rotation 0 -1 0 1.57 
+                  children[
+                    DEF Left_ParallelFrame2_Front_LINK Segment{
+                      centerOfMass 0.000933 0.057887 0.027000 
+                      mass 0.016945 
+                      momentsOfInertia [
+		      2.0901650E-5 1.817418E-6 0
+		      1.817418E-6 1.0095344E-5 0
+		      0 0 1.3482198E-5
+		      ]
+                      children[
+                        Transform {
+                          children[
+                        Inline { url "ParallelFrame2.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                      ]
+                    }
+	      ]
+	    }
+	    DEF Left_ParallelFrameUp_Front Joint {
+              jointType "rotate"
+              jointId 2
+	      jointAxis 1.0 0.0 0.0 
+              translation 0.027 -0.0635 0.0415 
+              ulimit [1.57]
+              llimit [0 ]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                Transform {
+                  translation 0 0 0 
+                  rotation 0 -1 0 1.57 
+                  children[
+                    DEF Left_ParallelFrame_Front_LINK Segment{
+                      centerOfMass 0.000933 0.057887 0.027000 
+                      mass 0.016945 
+                      momentsOfInertia [
+		      2.0901650E-5 1.817418E-6 0
+		      1.817418E-6 1.0095344E-5 0
+		      0 0 1.3482198E-5
+		      ]
+                      children[
+                        Transform {
+                          children[
+                        Inline { url "ParallelFrame1.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                      ]
+                    }
+                DEF Left_ServoBox_Front Joint {
+                  jointType "rotate"
+                  jointAxis 1.0 0.0 0.0 
+		  jointId 3
+                  translation -0.002 -0.106 0.0258
+		  ulimit [0.0]
+                  llimit [-1.57]
+                  rotorInertia 1.0
+                  rotorResistor 1.0
+                  children[
+                    DEF Left_ServoBox_Front_LINK Segment{
+                      centerOfMass -0.011375 -0.033791 0.026522
+                      mass 0.084636
+                      momentsOfInertia [
+		      5.0716244E-5 6.19721E-7 -1.16130E-7
+		      6.19721E-7 5.9297232E-5 1.385715E-6
+		      -1.16130E-7 1.385715E-6 4.4306330E-5
+		      ]
+                      children[
+                        Transform {
+                          rotation 0 0 -1 1.57 
+                          children[
+                        Inline { url "ServoBox_Front.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+        DEF Left_Shoulder_Back Joint {
+          jointType "rotate"
+          jointId 4
+          jointAxis 0.0 0.0 1.0 
+          translation -0.09 -0.1412 -0.055 
+          rotation 0 0 1 -1.57 
+          ulimit [1.57 ]
+          llimit [-1.57]
+          rotorInertia 1.0
+          rotorResistor 1.0
+          children[
+            DEF Left_Shoulder_Back_LINK Segment{
+              centerOfMass -0.002157 -0.054014 0.029939
+              mass 0.089684
+              momentsOfInertia [
+	      4.9662489E-5 -1.835120E-6 -1.53222E-7
+	      -1.835120E-6 4.1092152E-5 -4.4124E-8
+              -1.53222E-7 -4.4124E-8 5.4243877E-5
+	      ]
+              children[
+                Transform {
+                  children[
+                Inline { url "Left_Shoulder.wrl" }
+                  ]
+                }
+              ]
+            }
+	     DEF Left_ParallelFrameBottom_Back Joint {
+              jointType "rotate"
+              jointId 5
+              jointAxis 1.0 0.0 0.0 
+              translation 0.027 -0.04 0.0325
+              ulimit [1.57 ]
+              llimit [0]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                Transform {
+                  translation 0 0 0 
+                  rotation 0 -1 0 1.57 
+                  children[
+                    DEF Left_ParallelFrameBottom_Back_LINK Segment{
+                      centerOfMass 0.000933 0.057887 0.027000 
+                      mass 0.016945 
+                      momentsOfInertia [
+		      2.0901650E-5 1.817418E-6 0
+		      1.817418E-6 1.0095344E-5 0
+		      0 0 1.3482198E-5
+		      ]
+                      children[
+                        Transform {
+                          children[
+                        Inline { url "ParallelFrame2.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                      ]
+                    }
+	      ]
+	    }
+            DEF Left_ParallelFrameUp_Back Joint {
+              jointType "rotate"
+              jointId 6
+              jointAxis 0.0 0.0 1.0 
+              translation 0.027 -0.0635 0.0415 
+              rotation 0 1 0 -1.57 
+              ulimit [0 ]
+              llimit [-1.57 ]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                DEF Left_ParalleFrameUp_Back_LINK Segment{
+                  centerOfMass 0.000933 0.057887 0.027000 
+                  mass 0.016945 
+                  momentsOfInertia [
+		  2.0901650E-5 1.817418E-6 0
+		  1.817418E-6 1.0095344E-5 0
+		  0 0 1.3482198E-5
+		  ]
+                  children[
+                    Transform {
+                      children[
+                    Inline { url "ParallelFrame1.wrl" }
+                      ]
+                    }
+                  ]
+                }
+                DEF Left_ServoBox_Back Joint {
+                  jointType "rotate"
+                  jointAxis 0.0 0.0 1.0
+		  jointId 7
+		  translation 0.0258 -0.106 0.002
+	          rotation 0 0 1 -1.57
+                  ulimit [1.57 ]
+                  llimit [0]
+		  rotorInertia 1.0
+                  rotorResistor 1.0
+                  children[
+                    DEF Left_ServoBox_Back_LINK Segment{
+                      centerOfMass -0.011375 -0.033791 0.026522
+                      mass 0.084636
+                      momentsOfInertia [
+		      5.0716244E-5 6.19721E-7 -1.16130E-7
+		      6.19721E-7 5.9297232E-5 1.385715E-6
+		      -1.16130E-7 1.385715E-6 4.4306330E-5
+		      ]
+                      children[
+                        Transform {
+                          children[
+                        Inline { url "ServoBox_Back.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+        DEF Right_Shoulder_Front Joint {
+          jointType "rotate"
+          jointId 8
+          jointAxis 0.0 0.0 1.0 
+          translation 0.108 0.0367 -0.055 
+          ulimit [1.57]
+          llimit [-1.57 ]
+	  rotorInertia 1.0
+          rotorResistor 1.0
+          children[
+            Transform {
+              translation 0 0 0 
+              rotation 0 0 1 1.57 
+              children[
+                DEF Right_Shoulder_Front_LINK Segment{
+                  centerOfMass 0.002157 -0.054014 0.029939
+		  mass 0.089684 
+                  momentsOfInertia [
+		  4.9662489E-5 1.835120E-6 1.53222E-7
+		  1.835120E-6 4.1092152E-5 -4.4124E-8
+		  1.53222E-7 -4.4124E-8 5.4243877E-5
+		  ]
+                  children[
+                    Transform {
+                      children[
+                    Inline { url "Right_Shoulder.wrl" }
+                      ]
+                    }
+                  ]
+                }
+                  ]
+                }
+	     DEF Right_ParallelFrameBottom_Front Joint {
+              jointType "rotate"
+              jointId 9
+              jointAxis 0.0 1.0 0.0 
+              translation 0.04 0.027 0.0325 
+	      ulimit [1.57 ]
+              llimit [0 ]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                Transform {
+                  translation 0 0 0 
+                  rotation 0 1 0 1.57 
+		  #rotation 0 0 1 1.57
+                  children[
+                    DEF Right_ParallelFrameBottom_Front_LINK Segment{  
+		      centerOfMass 0.000933 0.057887 0.027000 
+                      mass 0.016945 
+                      momentsOfInertia [
+		      2.0901650E-5 1.817418E-6 0
+		      1.817418E-6 1.0095344E-5 0
+		      0 0 1.3482198E-5
+		      ]
+                      children[
+                        Transform {
+                          children[
+                        Inline { url "ParallelFrame2_Back.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                      ]
+                    }
+	      ]
+	    }
+	    DEF Right_ParalleFrameUp_Front Joint {
+              jointType "rotate"
+              jointId 10
+              jointAxis 1.0 0.0 0.0 
+              translation 0.0635 0.027 0.0415
+              rotation 0 0 1 1.57 
+              ulimit [1.57 ]
+              llimit [0 ]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                DEF Right_ParalleFrameUp_Front_LINK Segment{
+                  centerOfMass 0.000933 0.057887 0.027000 
+                  mass 0.016945 
+                  momentsOfInertia [
+		  2.0901650E-5 1.817418E-6 0
+		  1.817418E-6 1.0095344E-5 0
+		  0 0 1.3482198E-5
+		  ]
+                  children[
+                    Transform {
+                      rotation 0 -1 0 1.57 
+                      children[
+                    Inline { url "ParallelFrame1.wrl" }
+                      ]
+                    }
+                  ]
+                }
+		DEF Right_ServoBox_Front Joint {
+                  jointType "rotate"
+                  jointAxis 1.0 0.0 0.0 
+		  jointId 11
+                  translation -0.002 -0.106 0.0258
+                  ulimit [0 ]
+                  llimit [-1.57]
+		  rotorInertia 1.0
+                  rotorResistor 1.0
+                  children[
+                    DEF Right_ServoBox_Front_LINK Segment{
+                      centerOfMass -0.011262 -0.033813 0.023460 
+                      mass 0.084916 
+                      momentsOfInertia [ 
+		      5.0934600E-5 6.82528E-7 1.68393E-7
+		      6.82528E-7 5.9829063E-5 -1.395797E-6
+		      1.68393E-7 -1.395797E-6 4.4644067E-5
+		      ]
+                      children[
+                        Transform {
+                          rotation 0 0 1 -1.57 
+                          children[
+                        Inline { url "ServoBox1_Front.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+        DEF Right_Shoulder_Back Joint {
+          jointType "rotate"
+          jointId 12
+          jointAxis 0.0 0.0 1.0 
+          translation 0.09 -0.1412 -0.055 
+          ulimit [1.57 ]
+          llimit [-1.57 ]
+	  rotorInertia 1.0
+          rotorResistor 1.0
+          children[
+            Transform {
+              translation 0 0 0 
+              rotation 0 0 1 1.57 
+              children[
+                DEF Right_Shoulder_Back_LINK Segment{
+                  centerOfMass 0.002157 -0.054014 0.029939
+		  mass 0.089684 
+                  momentsOfInertia [
+		  4.9662489E-5 1.835120E-6 1.53222E-7
+		  1.835120E-6 4.1092152E-5 -4.4124E-8
+		  1.53222E-7 -4.4124E-8 5.4243877E-5
+		  ]
+                  children[
+                    Transform {
+                      children[
+                    Inline { url "Right_Shoulder.wrl" }
+                      ]
+                    }
+                  ]
+                }
+                  ]
+                }
+	     DEF Right_ParallelFrameBottom_Front Joint {
+              jointType "rotate"
+              jointId 13
+              jointAxis 0.0 1.0 0.0 
+              translation 0.04 0.027 0.0325 
+	      ulimit [1.57]
+              llimit [0.0]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                Transform {
+                  translation 0 0 0 
+                  rotation 0 1 0 1.57 
+		  #rotation 0 0 1 1.57
+                  children[
+                    DEF Right_ParallelFrameBottom_Front_LINK Segment{
+		      centerOfMass 0.000933 0.057887 0.027000 
+        	      mass 0.016945 
+                      momentsOfInertia [
+		      2.0901650E-5 1.817418E-6 0
+		      1.817418E-6 1.0095344E-5 0
+		      0 0 1.3482198E-5
+		      ]
+                      children[
+                        Transform {
+                          children[
+                        Inline { url "ParallelFrame2_Back.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+	      ]
+	    }
+            DEF Right_ParalleFrameUp_Back Joint {
+              jointType "rotate"
+              jointId 14
+              jointAxis 1.0 0.0 0.0 
+              translation 0.0635 0.027 0.0415 
+              rotation 0 0 1 1.57 
+              ulimit [1.57 ]
+              llimit [0.0 ]
+	      rotorInertia 1.0
+              rotorResistor 1.0
+              children[
+                DEF Right_ParalleFrameUp_Back_LINK Segment{
+                  centerOfMass 0.000933 0.057887 0.027000 
+                  mass 0.016945 
+                  momentsOfInertia [
+		  2.0901650E-5 1.817418E-6 0
+		  1.817418E-6 1.0095344E-5 0
+		  0 0 1.3482198E-5
+		  ]
+                  children[
+                    Transform {
+                      rotation 0 -1 0 1.57 
+                      children[
+                    Inline { url "ParallelFrame1.wrl" }
+                      ]
+                    }
+                  ]
+                }
+		DEF Right_ServoBox_Front Joint {
+                  jointType "rotate"
+                  jointAxis 1.0 0.0 0.0 
+		  jointId 15
+                  translation -0.002 -0.106 0.0258
+                  ulimit [0.0]
+                  llimit [-1.57 ]
+		  rotorInertia 1.0
+                  rotorResistor 1.0
+                  children[
+                    DEF Right_ServoBox_Front_LINK Segment{
+                      centerOfMass -0.011262 -0.033813 0.023460 
+                      mass 0.084916 
+                      momentsOfInertia [ 
+		      5.0934600E-5 6.82528E-7 1.68393E-7
+		      6.82528E-7 5.9829063E-5 -1.395797E-6
+		      1.68393E-7 -1.395797E-6 4.4644067E-5
+		      ]
+		      children[
+                        Transform {
+                          rotation 0 0 1 -1.57 
+                          children[
+                        Inline { url "ServoBox1_Back.wrl" }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
