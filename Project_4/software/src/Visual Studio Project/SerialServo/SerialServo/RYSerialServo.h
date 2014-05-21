@@ -76,7 +76,7 @@ int Serial::krs_move(int id,int angle,int speed)
 	port->Write(tx,0,3);
 	
 	//6回読み取り
-	for (int i = 0; i < 0; i++){
+	for (int i = 0; i < 3; i++){
 		try{
 			rx[i] = (Byte)port->ReadByte(); //データ受信
 		}
@@ -90,8 +90,8 @@ int Serial::krs_move(int id,int angle,int speed)
 	}
 	port->Close();//ポートを閉じる
 
-	dat=(int)rx[4];
-	dat=(dat<<7)+(int)rx[5];
+	dat=(int)rx[1];
+	dat=(dat<<7)+(int)rx[2];
 
 	return dat;
 }
