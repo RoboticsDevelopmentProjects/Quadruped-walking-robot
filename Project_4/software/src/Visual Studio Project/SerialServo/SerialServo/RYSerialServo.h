@@ -44,7 +44,7 @@ Serial::~Serial()
 //Serial::set_pos(サーボID,移動角度(0<=anglevalue<=180),速度(0<=speed<=127(0は脱力状態)))
 int Serial::krs_move(int id,int angle,int speed)
 {
-	SerialPort^ port=gcnew SerialPort("COM5",115200,Parity::Even,8,StopBits::One);//シリアルの設定
+	SerialPort^ port=gcnew SerialPort("COM3",115200,Parity::Even,8,StopBits::One);//シリアルの設定
 	port->Open();//ポート接続
 	//SerialPort^ port;
 	int anglevalue; //角度をコマンド値に変換
@@ -99,7 +99,7 @@ int Serial::krs_move(int id,int angle,int speed)
 //速度変更用関数(移動関数のほうの引数でスピードも可変できるので需要ないかも。一応サーボからの速度返却します)
 int Serial::krs_speed(int id,int speed)
 {
-	SerialPort^ port=gcnew SerialPort("COM5",115200,Parity::Even,8,StopBits::One);//シリアルの設定
+	SerialPort^ port=gcnew SerialPort("COM3",115200,Parity::Even,8,StopBits::One);//シリアルの設定
 	port->Open();//ポート接続
 
 	int dat;
